@@ -49,15 +49,15 @@
       <div style="width: 400px; float: left; background-color: #ababab;">
         <h2 class="text-center">{{ ship.name }} ({{ ship.type }}), {{ ship.size }}</h2>
         <dl class="dl-horizontal">
-          <dt>Armor ({{ ship.slots.armor }})</dt>
+          <dt>Armor ({{ armorSlots }} / {{ ship.slots.armor }})</dt>
           <dd v-for="entry in ship.default.armor" track-by="$index">
             {{ entry.name }} ({{ entry.slots }})
           </dd>
-          <dt>Subsystems ({{ ship.slots.subsystems }})</dt>
+          <dt>Subsystems ({{ subsystemSlots }} / {{ ship.slots.subsystems }})</dt>
           <dd v-for="entry in ship.default.subsystems" track-by="$index">
             {{ entry.name }} ({{ entry.slots }})
           </dd>
-          <dt>Weapons ({{ ship.slots.weapons }})</dt>
+          <dt>Weapons ({{ weaponSlots }} / {{ ship.slots.weapons }})</dt>
           <dd v-for="entry in ship.default.weapons" track-by="$index">
             {{ entry.name }} ({{ entry.slots }})
           </dd>
