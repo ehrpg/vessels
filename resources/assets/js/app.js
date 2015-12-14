@@ -32,13 +32,9 @@ function loadShips (ships) {
   return loadedShips
 }
 function loadShip (ship) {
-  var ids = []
-  ids = ship.default.armor
-  ship.default.armor = getComponents('armor', ids)
-  ids = ship.default.subsystems
-  ship.default.subsystems = getComponents('subsystems', ids)
-  ids = ship.default.weapons
-  ship.default.weapons = getComponents('weapons', ids)
+  ship.default.armor = getComponents('armor', ship.default.armor)
+  ship.default.subsystems = getComponents('subsystems', ship.default.subsystems)
+  ship.default.weapons = getComponents('weapons', ship.default.weapons)
   return ship
 }
 

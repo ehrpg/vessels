@@ -1,6 +1,9 @@
 {
   "private": true,
   "standard": {
+    "ignore": [
+      "/public/js/"
+    ],
     "globals": [
       "App",
       "Vue"

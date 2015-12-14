@@ -8,10 +8,7 @@
   <body>
     <nav class="navbar navbar-default">
       <div class="container-fluid">
-
-        <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse">
-
         </div><!-- /.navbar-collapse -->
       </div><!-- /.container-fluid -->
     </nav>
@@ -44,27 +41,6 @@
         </div>
       </div>
     </div>
-
-    <template id="ship-template">
-      <div style="width: 400px; float: left; background-color: #ababab;">
-        <h2 class="text-center">{{ ship.name }} ({{ ship.type }}), {{ ship.size }}</h2>
-        <dl class="dl-horizontal">
-          <dt>Armor ({{ armorSlots }} / {{ ship.slots.armor }})</dt>
-          <dd v-for="entry in ship.default.armor" track-by="$index">
-            {{ entry.name }} ({{ entry.slots }})
-          </dd>
-          <dt>Subsystems ({{ subsystemSlots }} / {{ ship.slots.subsystems }})</dt>
-          <dd v-for="entry in ship.default.subsystems" track-by="$index">
-            {{ entry.name }} ({{ entry.slots }})
-          </dd>
-          <dt>Weapons ({{ weaponSlots }} / {{ ship.slots.weapons }})</dt>
-          <dd v-for="entry in ship.default.weapons" track-by="$index">
-            {{ entry.name }} ({{ entry.slots }})
-          </dd>
-        </dl>
-      </div>
-    </template>
-
 
     <!-- LIBRARIES -->
     <script src="./public/js/jquery.js" charset="utf-8"></script>
