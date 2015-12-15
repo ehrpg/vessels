@@ -1,3 +1,6 @@
+import Armor from './components/armor.vue'
+import Subsystems from './components/subsystems.vue'
+import Weapons from './components/weapons.vue'
 import Ship from './components/ship.vue'
 
 function getComponents (dataName, ids) {
@@ -14,18 +17,12 @@ function getComponents (dataName, ids) {
   }
   return components
 }
-function renderData (containerName, data) {
-  var el = '#' + containerName
-  var component = new Vue({
-    el: el,
-    data: {data}
-  })
-}
 function loadShips (ships) {
   var loadedShips = []
   for (var key in ships) {
     if (ships.hasOwnProperty(key)) {
       var ship = ships[key]
+      ship['id'] = key
       loadedShips.push(loadShip(ship))
     }
   }
@@ -38,16 +35,18 @@ function loadShip (ship) {
   return ship
 }
 
-var armor = App.data.armor
-var subsystems = App.data.subsystems
-var weapons = App.data.weapons
 var ships = App.data.ships
-
-renderData('armor', armor)
-renderData('subsystems', subsystems)
-renderData('weapons', weapons)
-
 ships = loadShips(ships)
+
+/* eslint-disable no-unused-vars */
+var components = new Vue({
+  el: '#components',
+  components: {
+    armor: Armor,
+    subsystems: Subsystems,
+    weapons: Weapons
+  }
+})
 
 var vm = new Vue({
   el: '#ships',
@@ -58,3 +57,4 @@ var vm = new Vue({
     ship: Ship
   }
 })
+/* eslint-enable no-unused-vars */

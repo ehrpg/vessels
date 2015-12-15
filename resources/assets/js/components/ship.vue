@@ -1,7 +1,8 @@
 <template lang="jade">
-div(style={width: '400px', float: 'left', background: '#ababab'})
-  h2(class=text-center) {{ ship.name }} ({{ ship.type }}), {{ ship.size }}
-  dl(class='dl-horizontal')
+div(style={width: "400px", float: "left", border: "1px solid black"})
+  h3(class="text-center") {{ ship.name }}
+  h4(class="text-center") {{ ship.class}} ({{ ship.type }}), {{ ship.size }}
+  dl(class="dl-horizontal")
     dt Armor ({{ armorSlots }} / {{ ship.slots.armor }})
     dd(v-for="entry in ship.default.armor", track-by="$index")
       | {{ entry.name }} ({{ entry.slots }})
@@ -11,6 +12,13 @@ div(style={width: '400px', float: 'left', background: '#ababab'})
     dt Weapons ({{ weaponSlots }} / {{ ship.slots.weapons }})
     dd(v-for="entry in ship.default.weapons", track-by="$index")
       | {{ entry.name }} ({{ entry.slots }})
+  - var shipId = "ship-{{ ship.id }}"
+  div(class="text-right", style="border-bottom: 1px solid black;")
+    a(role="button", data-toggle="collapse", data-target="#" + shipId, aria-expand="false", aria-controls=shipId)
+      | Details [+]
+  div(class="collapse", id=shipId)
+    div(class="well")
+      | Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
 </template>
 
 <script>

@@ -14,28 +14,13 @@
     </nav>
 
     <div class="container-fluid">
-
       <div class="row">
-        <div class="col-sm-4 col-md-2" style="background-color: #efefef;">
-          <div id="armor">
-            <h2>Armor</h2>
-            <div v-for="entry in data">
-              {{ entry.name }}
-            </div>
-          </div>
-          <div id="subsystems">
-            <h2>Subsystems</h2>
-            <div v-for="entry in data">
-              {{ entry.name }}
-            </div>
-          </div>
-          <div id="weapons">
-            <h2>Weapons</h2>
-            <div v-for="entry in data">
-              {{ entry.name }}
-            </div>
-          </div>
+        <div id="components" class="col-sm-4 col-md-2">
+          <armor></armor>
+          <subsystems></subsystems>
+          <weapons></weapons>
         </div>
+
         <div id="ships" class="col-sm-8 col-md-10" style="background-color: #dedede;">
           <ship v-for="ship in ships" :ship="ship" :index="$index"></ship>
         </div>
@@ -44,6 +29,7 @@
 
     <!-- LIBRARIES -->
     <script src="./public/js/jquery.js" charset="utf-8"></script>
+    <script src="./public/js/bootstrap.js" charset="utf-8"></script>
     <script src="./public/js/vue.js" charset="utf-8"></script>
     <!-- ENVIRONMENT INITIALIZATION -->
     <script type="text/javascript">

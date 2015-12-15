@@ -1,12 +1,12 @@
 App.data.weapons = {
-  0: {
+  1: {
     'name': 'Gatling Gun',
     'size': 'S',
     'slots': 1,
     'type': 'kinetic',
     'damage': '1d6'
   },
-  1: {
+  2: {
     'name': 'Missile Turret',
     'size': 'S',
     'slots': 2,

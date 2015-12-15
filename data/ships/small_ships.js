@@ -1,6 +1,7 @@
 App.data.ships = {
-  0: {
-    name: 'Falcon',
+  1: {
+    name: 'Falcon MK I',
+    class: 'Falcon',
     size: 'S',
     type: 'Fighter',
     slots: {
@@ -9,13 +10,14 @@ App.data.ships = {
       weapons: 2
     },
     'default': {
-      armor: [0, 0],
-      subsystems: [2, 4, 5, 5, 0, 1],
-      weapons: [0, 0]
+      armor: [1, 1],
+      subsystems: [3, 5, 6, 6, 1, 2],
+      weapons: [1, 1]
     }
   },
-  1: {
-    name: 'Bussard',
+  2: {
+    name: 'Bussard MK I',
+    class: 'Bussard',
     size: 'S',
     type: 'Light Fighter',
     slots: {
@@ -24,9 +26,9 @@ App.data.ships = {
       weapons: 1
     },
     'default': {
-      armor: [0],
-      subsystems: [1, 4, 5],
-      weapons: [0]
+      armor: [1],
+      subsystems: [2, 5, 6],
+      weapons: [1]
     }
   }
 }
