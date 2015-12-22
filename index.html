@@ -4,21 +4,44 @@
     <meta charset="utf-8">
     <title>EH Vessels</title>
     <link rel="stylesheet" href="./public/css/bootstrap.min.css" media="screen" charset="utf-8">
+    <link rel="stylesheet" href="./public/css/site.css" media="screen" title="no title" charset="utf-8">
+    <style>
+      #container-components {
+        display: flex;
+        overflow: hidden;
+        height: 100vh;
+        margin-top: -100px;
+        padding-top: 100px;
+        position: relative;
+        backface-visibility: hidden;
+        will-change: overflow;
+      }
+      #components {
+        overflow: auto;
+        height: auto;
+      }
+      #components::-webkit-scrollbar {
+        display: none;
+      }
+    </style>
   </head>
   <body>
     <nav class="navbar navbar-default">
       <div class="container-fluid">
         <div class="collapse navbar-collapse">
         </div><!-- /.navbar-collapse -->
-      </div><!-- /.container-fluid -->
+      </div><!-- /.container-fluidt -->
     </nav>
 
     <div class="container-fluid">
       <div class="row">
-        <div id="components" class="col-sm-4 col-md-2">
-          <armor></armor>
-          <subsystems></subsystems>
-          <weapons></weapons>
+        <div id="container-components" class="col-sm-4 col-md-2">
+          <div id="components">
+            <armor></armor>
+            <subsystems></subsystems>
+            <weapons></weapons>
+            <div style="height: 500px"></div>
+          </div>
         </div>
 
         <div id="ships" class="col-sm-8 col-md-10" style="background-color: #dedede;">
@@ -44,5 +67,6 @@
     <script src="./data/ships/small_ships.js" charset="utf-8"></script>
     <!-- MAIN APP -->
     <script src="./public/js/app.js" charset="utf-8"></script>
+    <script src="./public/js/table_filter.js" charset="utf-8"></script>
   </body>
 </html>

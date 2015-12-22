@@ -1,7 +1,6 @@
 App.data.ships = {
   1: {
-    name: 'Falcon MK I',
-    class: 'Falcon',
+    class: 'Falcon MK I',
     size: 'S',
     type: 'Fighter',
     slots: {
@@ -16,8 +15,8 @@ App.data.ships = {
     }
   },
   2: {
-    name: 'Bussard MK I',
-    class: 'Bussard',
+    class: 'Bussard MK I',
+    name: 'Shipname #1',
     size: 'S',
     type: 'Light Fighter',
     slots: {
