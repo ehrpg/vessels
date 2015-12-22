@@ -2,19 +2,20 @@
 Please consider that the JS part isn't production ready at all, I just code it to show the concept of merging filters and titles together !
 */
 $(document).ready(function () {
+  $.support.transition = false
+
   $('.glyphicon-minus').click(function () {
-    var $btn = $(this)
     var addClass = ''
     var removeClass = ''
-    if ($btn.hasClass('glyphicon-minus')) {
+    if ($(this).hasClass('glyphicon-minus')) {
       addClass = 'glyphicon-plus'
       removeClass = 'glyphicon-minus'
     } else {
       addClass = 'glyphicon-minus'
       removeClass = 'glyphicon-plus'
     }
-    $btn.addClass(addClass)
-    $btn.removeClass(removeClass)
+    $(this).addClass(addClass)
+    $(this).removeClass(removeClass)
   })
 
   $('.filterable .btn-filter').click(function () {
