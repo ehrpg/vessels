@@ -4,18 +4,19 @@ Please consider that the JS part isn't production ready at all, I just code it t
 $(document).ready(function () {
   $.support.transition = false
 
-  $('.glyphicon-minus').click(function () {
+  $('.btn-collapse').click(function () {
+    var $span = $(this).find('span')
     var addClass = ''
     var removeClass = ''
-    if ($(this).hasClass('glyphicon-minus')) {
+    if ($span.hasClass('glyphicon-minus')) {
       addClass = 'glyphicon-plus'
       removeClass = 'glyphicon-minus'
     } else {
       addClass = 'glyphicon-minus'
       removeClass = 'glyphicon-plus'
     }
-    $(this).addClass(addClass)
-    $(this).removeClass(removeClass)
+    $span.addClass(addClass)
+    $span.removeClass(removeClass)
   })
 
   $('.filterable .btn-filter').click(function () {
