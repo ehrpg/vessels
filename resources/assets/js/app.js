@@ -3,6 +3,25 @@ import Subsystems from './components/subsystems.vue'
 import Weapons from './components/weapons.vue'
 import Ship from './components/ship.vue'
 
+$(document).ready(function () {
+  $.support.transition = false
+
+  $('.btn-collapse').click(function () {
+    var $span = $(this).find('span')
+    var addClass = ''
+    var removeClass = ''
+    if ($span.hasClass('glyphicon-minus')) {
+      addClass = 'glyphicon-plus'
+      removeClass = 'glyphicon-minus'
+    } else {
+      addClass = 'glyphicon-minus'
+      removeClass = 'glyphicon-plus'
+    }
+    $span.addClass(addClass)
+    $span.removeClass(removeClass)
+  })
+})
+
 function getComponents (dataName, ids) {
   if (App.data[dataName] === 'undefined') {
     return []
