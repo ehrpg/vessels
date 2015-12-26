@@ -4,6 +4,7 @@ App.data.weapons = {
     'size': 'S',
     'slots': 1,
     'type': 'kinetic',
+    'hull': 5,
     'damage': '1d6'
   },
   2: {
@@ -11,6 +12,7 @@ App.data.weapons = {
     'size': 'S',
     'slots': 2,
     'type': 'kinetic',
+    'hull': 10,
     'damage': '2d8'
   }
 }

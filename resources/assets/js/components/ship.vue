@@ -1,49 +1,69 @@
 <template lang="jade">
-div(style={width: "400px", float: "left", border: "1px solid black"})
-  h3(class="text-center") {{ ship.class }}
-  h4(class="text-center") {{ ship.type }}, {{ ship.size }}
-  h4(class="text-center", v-if="ship.name") "{{ ship.name }}"
-  dl(class="dl-horizontal")
-    dt Armor ({{ armorSlots }} / {{ ship.slots.armor }})
-    dd(v-for="entry in ship.default.armor", track-by="$index")
-      | {{ entry.name }} ({{ entry.slots }})
+h3 {{ ship.name }} <small>{{ ship.type }}</small>
 
-    dt Subsystems ({{ subsystemSlots }} / {{ ship.slots.subsystems }})
-    dd(v-for="entry in ship.default.subsystems", track-by="$index")
-      | {{ entry.name }} ({{ entry.slots }}),
+div(class="panel panel-default",
+  v-bind:class="{'panel-danger': armorExceeded}")
+  div(class="panel-heading")
+    h3(class="panel-title")
+     | Armor ({{ armorSlots }} / {{ ship.slots.armor }})
+  div(class="panel-body")
+    ul
+      li(v-for="armor in ship.components.armor", track-by="$index")
+        | {{ armor.name }}
 
-    dt Weapons ({{ weaponSlots }} / {{ ship.slots.weapons }})
-    dd(v-for="entry in ship.default.weapons", track-by="$index")
-      | {{ entry.name }} ({{ entry.slots }})
+div(class="panel panel-default",
+  v-bind:class="{'panel-danger': subsystemsExceeded}")
+  div(class="panel-heading")
+    h3(class="panel-title")
+    | Subsystems ({{ subsystemSlots }} / {{ ship.slots.subsystems }})
+  div(class="panel-body")
+    ul
+      li(v-for="subsystem in ship.components.subsystems", track-by="$index")
+        | {{ subsystem.name }}
 
-  - var shipId = "ship-{{ ship.id }}"
-  div(class="text-right", style="border-bottom: 1px solid black;")
-    a(role="button", data-toggle="collapse", data-target="#" + shipId, aria-expand="false", aria-controls=shipId)
-      | Details [+]
-  div(class="collapse", id=shipId)
-    div(class="well")
-      | Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
+div(class="panel panel-default",
+  v-bind:class="{'panel-danger': weaponsExceeded}")
+  div(class="panel-heading")
+    h3(class="panel-title")
+    | Weapons ({{ weaponSlots }} / {{ ship.slots.weapons }})
+  div(class="panel-body")
+    ul
+      li(v-for="weapon in ship.components.weapons", track-by="$index")
+        | {{ weapon.name }}
 </template>
 
 <script>
   export default {
-      props: [ 'ship', 'index' ],
+      props: [ 'ship' ],
       computed: {
         armorSlots: function () {
-          return this._sumSlots(this.ship.default.armor)
+          return this._sumSlots(this.ship.components.armor)
         },
         subsystemSlots: function () {
-          return this._sumSlots(this.ship.default.subsystems)
+          return this._sumSlots(this.ship.components.subsystems)
         },
         weaponSlots: function () {
-          return this._sumSlots(this.ship.default.weapons)
+          return this._sumSlots(this.ship.components.weapons)
+        },
+        armorExceeded: function () {
+          return this.armorSlots > this.ship.slots.armor;
+        },
+        subsystemsExceeded: function () {
+          return this.subsystemSlots > this.ship.slots.subsystems;
+        },
+        weaponsExceeded: function () {
+          return this.weaponSlots > this.ship.slots.weapons;
         }
       },
       methods: {
         _sumSlots: function (container) {
-          return container.reduce(function (total, item) {
-            return total + item.slots
-          }, 0)
+          if (container !== undefined) {
+            return container.reduce(function (total, item) {
+              return total + item.slots
+            }, 0)
+          } else {
+            return 0
+          }
         }
       }
   }

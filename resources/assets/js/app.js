@@ -22,40 +22,56 @@ $(document).ready(function () {
   })
 })
 
-function getComponents (dataName, ids) {
-  if (App.data[dataName] === 'undefined') {
-    return []
-  }
-  var data = App.data[dataName]
+// function getComponents (dataName, ids) {
+//   if (App.data[dataName] === 'undefined') {
+//     return []
+//   }
+//   var data = App.data[dataName]
+//
+//   var components = []
+//   for (var i = 0; i < ids.length; i++) {
+//     var id = ids[i]
+//     var component = data[id]
+//     components.push(component)
+//   }
+//   return components
+// }
+// function loadShips (ships) {
+//   var loadedShips = []
+//   for (var key in ships) {
+//     if (ships.hasOwnProperty(key)) {
+//       var ship = ships[key]
+//       ship['id'] = key
+//       loadedShips.push(loadShip(ship))
+//     }
+//   }
+//   return loadedShips
+// }
+// function loadShip (ship) {
+//   ship.default.armor = getComponents('armor', ship.default.armor)
+//   ship.default.subsystems = getComponents('subsystems', ship.default.subsystems)
+//   ship.default.weapons = getComponents('weapons', ship.default.weapons)
+//   return ship
+// }
 
-  var components = []
-  for (var i = 0; i < ids.length; i++) {
-    var id = ids[i]
-    var component = data[id]
-    components.push(component)
+function loadChassis (chassis) {
+  function checkIntegrity (object, key, val) {
+    object[key] = object[key] === undefined
+      ? val : object[key]
   }
-  return components
-}
-function loadShips (ships) {
-  var loadedShips = []
-  for (var key in ships) {
-    if (ships.hasOwnProperty(key)) {
-      var ship = ships[key]
-      ship['id'] = key
-      loadedShips.push(loadShip(ship))
-    }
-  }
-  return loadedShips
-}
-function loadShip (ship) {
-  ship.default.armor = getComponents('armor', ship.default.armor)
-  ship.default.subsystems = getComponents('subsystems', ship.default.subsystems)
-  ship.default.weapons = getComponents('weapons', ship.default.weapons)
-  return ship
-}
+  checkIntegrity(chassis, 'armor', 0)
+  checkIntegrity(chassis, 'rooms', 0)
+  checkIntegrity(chassis, 'subsystems', 0)
+  checkIntegrity(chassis, 'chassis', 0)
 
-var ships = App.data.ships
-ships = loadShips(ships)
+  checkIntegrity(chassis, 'components', {})
+  checkIntegrity(chassis.components, 'armor', [])
+  checkIntegrity(chassis.components, 'rooms', [])
+  checkIntegrity(chassis.components, 'subsystems', [])
+  checkIntegrity(chassis.components, 'chassis', [])
+
+  return chassis
+}
 
 /* eslint-disable no-unused-vars */
 var components = new Vue({
@@ -67,13 +83,32 @@ var components = new Vue({
   }
 })
 
-var vm = new Vue({
+App.vms.ship = new Vue({
   el: '#ships',
   data: {
-    ships: ships
+    ship: loadChassis(App.data.chassis[1])
   },
   components: {
     ship: Ship
   }
 })
+
+function drag (ev) {
+  ev.dataTransfer.setData('text', ev.target.id)
+}
+
+function allowDrop (ev) {
+  ev.preventDefault()
+}
+
+function drop (ev) {
+  ev.preventDefault()
+  var text = ev.dataTransfer.getData('text')
+  var result = text.split('-')
+  var type = result[0]
+  var id = result[1]
+  var data = App.data[type][id]
+  var ship = App.vms.ship
+  ship.ship.components[type].push(data)
+}
 /* eslint-enable no-unused-vars */

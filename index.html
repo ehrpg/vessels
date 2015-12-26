@@ -6,6 +6,26 @@
     <link rel="stylesheet" href="./public/css/bootstrap.min.css" media="screen" charset="utf-8">
     <link rel="stylesheet" href="./public/css/datatables.min.css" media="screen" charset="utf-8">
     <link rel="stylesheet" href="./public/css/site.css" media="screen" charset="utf-8">
+    <script type="text/javascript">
+      function drag (ev) {
+        ev.dataTransfer.setData('text', ev.target.id)
+      }
+
+      function allowDrop(ev) {
+        ev.preventDefault();
+      }
+
+      function drop(ev) {
+        ev.preventDefault();
+        var text = ev.dataTransfer.getData('text');
+        var result = text.split('-')
+        var type = result[0]
+        var id = result[1]
+        var data = App.data[type][id];
+        var ship = App.vms.ship
+        ship.ship.components[type].push(data);
+      }
+    </script>
   </head>
   <body>
     <nav class="navbar navbar-default">
@@ -23,16 +43,43 @@
       <div class="row">
         <div id="wrapper">
           <div id="sidebar" class="col-sm-5 col-md-4 col-lg-3">
-            <div id="components">
-              <armor></armor>
-              <subsystems></subsystems>
-              <weapons></weapons>
-            </div>
+            <!-- Nav tabs -->
+            <ul class="nav nav-tabs" role="tablist">
+              <li role="presentation" class="active">
+                <a href="#armor" aria-controls="armor" role="tab" data-toggle="tab">Armor</a>
+              </li>
+              <li role="presentation">
+                <a href="#subsystems" aria-controls="subsystems" role="tab" data-toggle="tab">Subsystems</a>
+              </li>
+              <li role="presentation">
+                <a href="#weapons" aria-controls="weapons" role="tab" data-toggle="tab">Weapons</a>
+              </li>
+            </ul>
+
+            <!-- Tab panes -->
+            <div id="components" class="tab-content">
+              <div role="tabpanel" class="tab-pane active" id="armor">
+                <armor></armor>
+              </div>
+              <div role="tabpanel" class="tab-pane" id="subsystems">
+                <subsystems></subsystems>
+              </div>
+              <div role="tabpanel" class="tab-pane" id="weapons">
+                <weapons></weapons>
+              </div>
+            </div><!-- /.components -->
           </div><!-- /.sidebar -->
 
           <div id="content" class="col-sm-7 col-md-8 col-lg-9">
-            <div id="ships" style="background-color: #dedede;">
-              <ship v-for="ship in ships" :ship="ship" :index="$index"></ship>
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <h3 class="panel-title">asd</h3>
+              </div>
+              <div class="panel-body">
+                <div id="ships" ondrop="drop(event)", ondragover="allowDrop(event)">
+                  <ship :ship="ship"></ship>
+                </div>
+              </div>
             </div>
           </div><!-- /.content -->
         </div><!-- /.wrapper -->
@@ -42,20 +89,22 @@
     <!-- LIBRARIES -->
     <script src="./public/js/jquery.js" charset="utf-8"></script>
     <script src="./public/js/bootstrap.min.js" charset="utf-8"></script>
+    <script src="./public/js/datatables.min.js" charset="utf-8"></script>
     <script src="./public/js/vue.js" charset="utf-8"></script>
     <!-- ENVIRONMENT INITIALIZATION -->
     <script type="text/javascript">
-      var App = {}; App.data = {}
+      var App = {}; App.data = {}; App.vms = {};
       Vue.config.debug = true
     </script>
     <!-- DATA / COMPONENTS -->
     <script src="./data/components/armor.js" charset="utf-8"></script>
     <script src="./data/components/subsystems.js" charset="utf-8"></script>
     <script src="./data/components/weapons.js" charset="utf-8"></script>
+    <!-- DATA / CHASSIS -->
+    <script src="./data/chassis.js" charset="utf-8"></script>
     <!-- DATA / SHIPS -->
     <script src="./data/ships/small_ships.js" charset="utf-8"></script>
     <!-- MAIN APP -->
     <script src="./public/js/app.js" charset="utf-8"></script>
-    <script src="./public/js/datatables.min.js" charset="utf-8"></script>
   </body>
 </html>

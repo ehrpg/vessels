@@ -3,18 +3,18 @@ App.data.armor = {
     'name': 'Lightweight Alloy',
     'size': 'S',
     'slots': 1,
-    'hull': 10
+    'hull': 5
   },
   2: {
     'name': 'Reinforced Alloy',
     'size': 'S',
     'slots': 2,
-    'hull': 25
+    'hull': 12
   },
   3: {
     'name': 'Military Grade Composite',
     'size': 'S',
     'slots': 3,
-    'hull': 40
+    'hull': 20
   }
 }
