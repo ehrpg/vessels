@@ -7,9 +7,11 @@ div(class="panel panel-default",
     h3(class="panel-title")
      | Armor ({{ armorSlots }} / {{ ship.slots.armor }})
   div(class="panel-body")
-    ul
-      li(v-for="armor in ship.components.armor", track-by="$index")
+    ul(class="list-group")
+      li(class="list-group-item",
+      v-for="armor in ship.components.armor", track-by="$index")
         | {{ armor.name }}
+        a(class="btn btn-default btn-xs pull-left", style="margin-right: 10px", v-on:click="remove('armor', $index, $event)") &times;
 
 div(class="panel panel-default",
   v-bind:class="{'panel-danger': subsystemsExceeded}")
@@ -17,9 +19,11 @@ div(class="panel panel-default",
     h3(class="panel-title")
     | Subsystems ({{ subsystemSlots }} / {{ ship.slots.subsystems }})
   div(class="panel-body")
-    ul
-      li(v-for="subsystem in ship.components.subsystems", track-by="$index")
+    ul(class="list-group")
+      li(class="list-group-item",
+      v-for="subsystem in ship.components.subsystems", track-by="$index")
         | {{ subsystem.name }}
+        a(class="btn btn-default btn-xs pull-left", style="margin-right: 10px", v-on:click="remove('subsystems', $index, $event)") &times;
 
 div(class="panel panel-default",
   v-bind:class="{'panel-danger': weaponsExceeded}")
@@ -27,12 +31,25 @@ div(class="panel panel-default",
     h3(class="panel-title")
     | Weapons ({{ weaponSlots }} / {{ ship.slots.weapons }})
   div(class="panel-body")
-    ul
-      li(v-for="weapon in ship.components.weapons", track-by="$index")
+    ul(class="list-group")
+      li(class="list-group-item",
+      v-for="weapon in ship.components.weapons", track-by="$index")
         | {{ weapon.name }}
+        a(class="btn btn-default btn-xs pull-left", style="margin-right: 10px", v-on:click="remove('weapons', $index, $event)") &times;
 </template>
 
 <script>
+  // $(document).ready(function () {
+  //   $('.remove-component').click (function () {
+  //     var $li = $(this).closest('li')
+  //     var type = $li.attr('data-type')
+  //     var index = $li.attr('data-index')
+  //     console.log(type);
+  //     console.log(index);
+  //
+  //   })
+  // })
+
   export default {
       props: [ 'ship' ],
       computed: {
@@ -64,6 +81,9 @@ div(class="panel panel-default",
           } else {
             return 0
           }
+        },
+        remove: function (type, index, event) {
+          this.ship.components[type].splice(index, 1)
         }
       }
   }

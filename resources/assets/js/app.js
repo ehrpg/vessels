@@ -59,16 +59,16 @@ function loadChassis (chassis) {
     object[key] = object[key] === undefined
       ? val : object[key]
   }
-  checkIntegrity(chassis, 'armor', 0)
-  checkIntegrity(chassis, 'rooms', 0)
-  checkIntegrity(chassis, 'subsystems', 0)
-  checkIntegrity(chassis, 'chassis', 0)
+  checkIntegrity(chassis.slots, 'armor', 0)
+  checkIntegrity(chassis.slots, 'rooms', 0)
+  checkIntegrity(chassis.slots, 'subsystems', 0)
+  checkIntegrity(chassis.slots, 'weapons', 0)
 
   checkIntegrity(chassis, 'components', {})
   checkIntegrity(chassis.components, 'armor', [])
   checkIntegrity(chassis.components, 'rooms', [])
   checkIntegrity(chassis.components, 'subsystems', [])
-  checkIntegrity(chassis.components, 'chassis', [])
+  checkIntegrity(chassis.components, 'weapons', [])
 
   return chassis
 }
@@ -83,32 +83,31 @@ var components = new Vue({
   }
 })
 
+var currentShip = JSON.parse(localStorage.getItem('currentShip'))
+var chassis = App.data.chassis[1]
+var loadedChassis = currentShip !== undefined
+  ? currentShip : loadChassis(chassis)
+
 App.vms.ship = new Vue({
   el: '#ships',
-  data: {
-    ship: loadChassis(App.data.chassis[1])
-  },
+  data: loadedChassis,
   components: {
     ship: Ship
   }
 })
 
-function drag (ev) {
-  ev.dataTransfer.setData('text', ev.target.id)
-}
+var ships = App.data.ships
 
-function allowDrop (ev) {
-  ev.preventDefault()
-}
+$('#downloadShips').click(function () {
+  var obj = JSON.parse(JSON.stringify(App.vms.ship.$data))
+  var data = 'text/json;charset=utf-8,' + encodeURIComponent(JSON.stringify(obj))
+  var anchor = document.getElementById('downloadShips')
+  anchor.href = 'data:' + data
+  anchor.download = 'data.json'
+})
 
-function drop (ev) {
-  ev.preventDefault()
-  var text = ev.dataTransfer.getData('text')
-  var result = text.split('-')
-  var type = result[0]
-  var id = result[1]
-  var data = App.data[type][id]
-  var ship = App.vms.ship
-  ship.ship.components[type].push(data)
-}
+$(window).bind('unload', function () {
+  var obj = JSON.parse(JSON.stringify(App.vms.ship.$data))
+  localStorage.setItem('currentShip', JSON.stringify(obj))
+})
 /* eslint-enable no-unused-vars */

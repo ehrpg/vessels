@@ -23,7 +23,7 @@
         var id = result[1]
         var data = App.data[type][id];
         var ship = App.vms.ship
-        ship.ship.components[type].push(data);
+        ship.components[type].push(data);
       }
     </script>
   </head>
@@ -72,12 +72,15 @@
 
           <div id="content" class="col-sm-7 col-md-8 col-lg-9">
             <div class="panel panel-default">
-              <div class="panel-heading">
-                <h3 class="panel-title">asd</h3>
+              <div class="panel-heading clearfix">
+                <h3 class="panel-title pull-left">asd</h3>
+                <div class="pull-right">
+                  <a id="downloadShips" type="button" name="save" class="btn btn-default btn-xs">Save</a>
+                </div>
               </div>
               <div class="panel-body">
                 <div id="ships" ondrop="drop(event)", ondragover="allowDrop(event)">
-                  <ship :ship="ship"></ship>
+                  <ship :ship="$data"></ship>
                 </div>
               </div>
             </div>
