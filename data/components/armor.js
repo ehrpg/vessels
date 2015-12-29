@@ -1,9 +1,10 @@
-App.data.armor = {
+App.data.components.armor = {
   1: {
     'name': 'Lightweight Alloy',
     'size': 'S',
     'slots': 1,
-    'hull': 5
+    'hull': 5,
+    'special': 'long ass text bla balblab albalbab albalb alba lbalba'
   },
   2: {
     'name': 'Reinforced Alloy',

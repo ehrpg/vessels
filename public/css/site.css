@@ -24,3 +24,24 @@ tfoot input {
 .table-nonfluid {
    width: auto !important;
 }
+
+.dataTables_filter {
+  display: none;
+}
+
+.components_table > tbody > tr:last-child > td {
+  border-bottom: 1px solid black;
+}
+
+div[id^='container-components-'] {
+  height: calc(100vh - 335px);
+  overflow-y: auto;
+}
+
+#details {
+  height: 158px;
+}
+
+#details .panel-body {
+  height: 100px;
+}

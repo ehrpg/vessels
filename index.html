@@ -21,9 +21,15 @@
         var result = text.split('-')
         var type = result[0]
         var id = result[1]
-        var data = App.data[type][id];
+        var data = App.data.components[type][id];
         var ship = App.vms.ship
         ship.components[type].push(data);
+      }
+
+      function updateDetails(type, id) {
+        console.log(id);
+        var data = App.data.components[type][id]
+        App.vms.details.$data = data
       }
     </script>
   </head>
@@ -39,53 +45,64 @@
       </div><!-- /.container-fluidt -->
     </nav>
 
-    <div class="container-fluid">
+    <div id="wrapper" class="container-fluid">
       <div class="row">
-        <div id="wrapper">
-          <div id="sidebar" class="col-sm-5 col-md-4 col-lg-3">
+        <div id="details" class="col-sm-offset-1 col-sm-10
+          col-md-offset-2 col-md-8
+          col-lg-offset-3 col-lg-6">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title">Info</h3>
+            </div>
+            <div class="panel-body">
+              {{ $data | json }}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div id="sidebar" class="col-sm-3 col-md-2 col-lg-1">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              Components
+            </div>
             <!-- Nav tabs -->
             <ul class="nav nav-tabs" role="tablist">
               <li role="presentation" class="active">
-                <a href="#armor" aria-controls="armor" role="tab" data-toggle="tab">Armor</a>
+                <a href="#container-components-armor" aria-controls="container-components-armor" role="tab" data-toggle="tab">A</a>
               </li>
               <li role="presentation">
-                <a href="#subsystems" aria-controls="subsystems" role="tab" data-toggle="tab">Subsystems</a>
+                <a href="#container-components-subsystems" aria-controls="container-components-subsystems" role="tab" data-toggle="tab">S</a>
               </li>
               <li role="presentation">
-                <a href="#weapons" aria-controls="weapons" role="tab" data-toggle="tab">Weapons</a>
+                <a href="#container-components-weapons" aria-controls="container-components-weapons" role="tab" data-toggle="tab">W</a>
               </li>
             </ul>
-
             <!-- Tab panes -->
             <div id="components" class="tab-content">
-              <div role="tabpanel" class="tab-pane active" id="armor">
-                <armor></armor>
-              </div>
-              <div role="tabpanel" class="tab-pane" id="subsystems">
-                <subsystems></subsystems>
-              </div>
-              <div role="tabpanel" class="tab-pane" id="weapons">
-                <weapons></weapons>
-              </div>
+              <components></components>
+              <!-- <armor></armor>
+              <subsystems></subsystems>
+              <weapons></weapons> -->
             </div><!-- /.components -->
-          </div><!-- /.sidebar -->
+          </div>
+        </div><!-- /.sidebar -->
 
-          <div id="content" class="col-sm-7 col-md-8 col-lg-9">
-            <div class="panel panel-default">
-              <div class="panel-heading clearfix">
-                <h3 class="panel-title pull-left">asd</h3>
-                <div class="pull-right">
-                  <a id="downloadShips" type="button" name="save" class="btn btn-default btn-xs">Save</a>
-                </div>
-              </div>
-              <div class="panel-body">
-                <div id="ships" ondrop="drop(event)", ondragover="allowDrop(event)">
-                  <ship :ship="$data"></ship>
-                </div>
+        <div id="content" class="col-sm-5 col-md-7 col-lg-9" ondrop="drop(event)", ondragover="allowDrop(event)">
+          <div class="panel panel-default">
+            <div class="panel-heading clearfix">
+              <h3 class="panel-title pull-left">asd</h3>
+              <div class="pull-right">
+                <a id="downloadShips" type="button" name="save" class="btn btn-default btn-xs">Save</a>
               </div>
             </div>
-          </div><!-- /.content -->
-        </div><!-- /.wrapper -->
+            <div class="panel-body">
+              <div id="ships">
+                <ship :ship="$data"></ship>
+              </div>
+            </div>
+          </div>
+        </div><!-- /.content -->
       </div><!-- /.row -->
     </div><!-- /.container-fluid -->
 
@@ -96,7 +113,7 @@
     <script src="./public/js/vue.js" charset="utf-8"></script>
     <!-- ENVIRONMENT INITIALIZATION -->
     <script type="text/javascript">
-      var App = {}; App.data = {}; App.vms = {};
+      var App = {}; App.data = {}; App.data.components = {}; App.vms = {};
       Vue.config.debug = true
     </script>
     <!-- DATA / COMPONENTS -->

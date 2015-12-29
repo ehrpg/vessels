@@ -1,7 +1,5 @@
-import Armor from './components/armor.vue'
-import Subsystems from './components/subsystems.vue'
-import Weapons from './components/weapons.vue'
 import Ship from './components/ship.vue'
+import Components from './components/components.vue'
 
 $(document).ready(function () {
   $.support.transition = false
@@ -22,38 +20,6 @@ $(document).ready(function () {
   })
 })
 
-// function getComponents (dataName, ids) {
-//   if (App.data[dataName] === 'undefined') {
-//     return []
-//   }
-//   var data = App.data[dataName]
-//
-//   var components = []
-//   for (var i = 0; i < ids.length; i++) {
-//     var id = ids[i]
-//     var component = data[id]
-//     components.push(component)
-//   }
-//   return components
-// }
-// function loadShips (ships) {
-//   var loadedShips = []
-//   for (var key in ships) {
-//     if (ships.hasOwnProperty(key)) {
-//       var ship = ships[key]
-//       ship['id'] = key
-//       loadedShips.push(loadShip(ship))
-//     }
-//   }
-//   return loadedShips
-// }
-// function loadShip (ship) {
-//   ship.default.armor = getComponents('armor', ship.default.armor)
-//   ship.default.subsystems = getComponents('subsystems', ship.default.subsystems)
-//   ship.default.weapons = getComponents('weapons', ship.default.weapons)
-//   return ship
-// }
-
 function loadChassis (chassis) {
   function checkIntegrity (object, key, val) {
     object[key] = object[key] === undefined
@@ -72,15 +38,17 @@ function loadChassis (chassis) {
 
   return chassis
 }
-
-/* eslint-disable no-unused-vars */
+/* eslint-disable no-unused,-vars no-undef */
 var components = new Vue({
   el: '#components',
   components: {
-    armor: Armor,
-    subsystems: Subsystems,
-    weapons: Weapons
+    components: Components
   }
+})
+
+App.vms.details = new Vue({
+  el: '#details',
+  data: {}
 })
 
 var currentShip = JSON.parse(localStorage.getItem('currentShip'))
@@ -96,8 +64,6 @@ App.vms.ship = new Vue({
   }
 })
 
-var ships = App.data.ships
-
 $('#downloadShips').click(function () {
   var obj = JSON.parse(JSON.stringify(App.vms.ship.$data))
   var data = 'text/json;charset=utf-8,' + encodeURIComponent(JSON.stringify(obj))
@@ -110,4 +76,4 @@ $(window).bind('unload', function () {
   var obj = JSON.parse(JSON.stringify(App.vms.ship.$data))
   localStorage.setItem('currentShip', JSON.stringify(obj))
 })
-/* eslint-enable no-unused-vars */
+/* eslint-enable no-unused-vars, no-undef */

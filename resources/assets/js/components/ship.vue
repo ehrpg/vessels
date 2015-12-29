@@ -1,55 +1,42 @@
 <template lang="jade">
 h3 {{ ship.name }} <small>{{ ship.type }}</small>
 
-div(class="panel panel-default",
-  v-bind:class="{'panel-danger': armorExceeded}")
-  div(class="panel-heading")
-    h3(class="panel-title")
-     | Armor ({{ armorSlots }} / {{ ship.slots.armor }})
-  div(class="panel-body")
-    ul(class="list-group")
-      li(class="list-group-item",
-      v-for="armor in ship.components.armor", track-by="$index")
-        | {{ armor.name }}
+table(class="table table-condensed table-striped")
+  thead
+    tr
+      th(class="col-sm-1") Actions
+      th(class="col-sm-1") Slots
+      th Name
+  tbody
+    tr
+      td(colspan="3", class="text-center", :class="{'danger': armorExceeded}")
+        h4 Armor ({{ armorSlots }} / {{ ship.slots.armor }})
+    tr(v-for="armor in ship.components.armor", track-by="$index")
+      td
         a(class="btn btn-default btn-xs pull-left", style="margin-right: 10px", v-on:click="remove('armor', $index, $event)") &times;
+      td {{ armor.slots }}
+      td {{ armor.name }}
 
-div(class="panel panel-default",
-  v-bind:class="{'panel-danger': subsystemsExceeded}")
-  div(class="panel-heading")
-    h3(class="panel-title")
-    | Subsystems ({{ subsystemSlots }} / {{ ship.slots.subsystems }})
-  div(class="panel-body")
-    ul(class="list-group")
-      li(class="list-group-item",
-      v-for="subsystem in ship.components.subsystems", track-by="$index")
-        | {{ subsystem.name }}
+    tr
+      td(colspan="3", class="text-center", :class="{'danger': subsystemsExceeded}")
+        h4 Subsystems ({{ subsystemSlots }} / {{ ship.slots.subsystems }})
+    tr(v-for="subsystem in ship.components.subsystems", track-by="$index")
+      td
         a(class="btn btn-default btn-xs pull-left", style="margin-right: 10px", v-on:click="remove('subsystems', $index, $event)") &times;
+      td {{ subsystem.slots }}
+      td {{ subsystem.name }}
 
-div(class="panel panel-default",
-  v-bind:class="{'panel-danger': weaponsExceeded}")
-  div(class="panel-heading")
-    h3(class="panel-title")
-    | Weapons ({{ weaponSlots }} / {{ ship.slots.weapons }})
-  div(class="panel-body")
-    ul(class="list-group")
-      li(class="list-group-item",
-      v-for="weapon in ship.components.weapons", track-by="$index")
-        | {{ weapon.name }}
+    tr
+      td(colspan="3", class="text-center", :class="{'danger': weaponsExceeded}")
+        h4 Weapons ({{ weaponSlots }} / {{ ship.slots.weapons }})
+    tr(v-for="weapon in ship.components.weapons", track-by="$index")
+      td
         a(class="btn btn-default btn-xs pull-left", style="margin-right: 10px", v-on:click="remove('weapons', $index, $event)") &times;
+      td {{ weapon.slots }}
+      td {{ weapon.name }}
 </template>
 
 <script>
-  // $(document).ready(function () {
-  //   $('.remove-component').click (function () {
-  //     var $li = $(this).closest('li')
-  //     var type = $li.attr('data-type')
-  //     var index = $li.attr('data-index')
-  //     console.log(type);
-  //     console.log(index);
-  //
-  //   })
-  // })
-
   export default {
       props: [ 'ship' ],
       computed: {

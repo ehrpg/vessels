@@ -1,4 +1,4 @@
-App.data.weapons = {
+App.data.components.weapons = {
   1: {
     'name': 'Gatling Gun',
     'size': 'S',

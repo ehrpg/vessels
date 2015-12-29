@@ -1,4 +1,4 @@
-App.data.subsystems = {
+App.data.components.subsystems = {
   1: {
     'name': 'Life Support',
     'size': 'S',
