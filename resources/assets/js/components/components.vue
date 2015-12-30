@@ -6,7 +6,7 @@ div(role="tabpanel" class="tab-pane",
     thead
       tr
         th Name
-        th Slots
+        th(class="col-sm-1") Slots
     tfoot(class="tfoot-top")
       tr
         th Name
@@ -26,7 +26,7 @@ div(role="tabpanel" class="tab-pane",
   $(document).ready( function () {
     var $elem = $('[id^=container-components-]:first')
     $('[id^=container-components-]:first').addClass('active')
-    
+
     for (var component in App.data.components) {
       if (App.data.components.hasOwnProperty(component)) {
         common.initDataTable('#components-' + component)

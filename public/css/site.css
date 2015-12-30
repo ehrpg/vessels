@@ -34,7 +34,7 @@ tfoot input {
 }
 
 div[id^='container-components-'] {
-  height: calc(100vh - 335px);
+  max-height: calc(100vh - 335px);
   overflow-y: auto;
 }
 
@@ -44,4 +44,17 @@ div[id^='container-components-'] {
 
 #details .panel-body {
   height: 100px;
+}
+
+@media (min-width: 768px ) {
+  #sidebar {
+    min-width: 250px;
+  }
+  #content {
+    max-width: calc(100% - 250px);
+  }
+}
+
+.table-condensed>tbody>tr>td {
+  padding: 2px 5px;
 }

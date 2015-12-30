@@ -1,25 +1,6 @@
 import Ship from './components/ship.vue'
 import Components from './components/components.vue'
 
-$(document).ready(function () {
-  $.support.transition = false
-
-  $('.btn-collapse').click(function () {
-    var $span = $(this).find('span')
-    var addClass = ''
-    var removeClass = ''
-    if ($span.hasClass('glyphicon-minus')) {
-      addClass = 'glyphicon-plus'
-      removeClass = 'glyphicon-minus'
-    } else {
-      addClass = 'glyphicon-minus'
-      removeClass = 'glyphicon-plus'
-    }
-    $span.addClass(addClass)
-    $span.removeClass(removeClass)
-  })
-})
-
 function loadChassis (chassis) {
   function checkIntegrity (object, key, val) {
     object[key] = object[key] === undefined
@@ -38,7 +19,7 @@ function loadChassis (chassis) {
 
   return chassis
 }
-/* eslint-disable no-unused,-vars no-undef */
+/* eslint-disable no-unused-vars, no-undef */
 var components = new Vue({
   el: '#components',
   components: {
