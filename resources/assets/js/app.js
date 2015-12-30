@@ -1,6 +1,15 @@
 import Ship from './components/ship.vue'
 import Components from './components/components.vue'
 
+App.getComponentById = function (type, id) {
+  var components = App.data.components[type]
+  for (var i = 0; i < components.length; i++) {
+    var component = components[i]
+    if (component.id == id)
+      return component
+  }
+}
+
 function loadChassis (chassis) {
   function checkIntegrity (object, key, val) {
     object[key] = object[key] === undefined
@@ -33,13 +42,13 @@ App.vms.details = new Vue({
 })
 
 var currentShip = JSON.parse(localStorage.getItem('currentShip'))
-var chassis = App.data.chassis[1]
-var loadedChassis = currentShip !== undefined
-  ? currentShip : loadChassis(chassis)
+var chassis = loadChassis(App.data.chassis[1])
+var ship = currentShip !== undefined
+  ? currentShip : chassis
 
 App.vms.ship = new Vue({
   el: '#ships',
-  data: loadedChassis,
+  data: ship,
   components: {
     ship: Ship
   }
@@ -51,6 +60,10 @@ $('#downloadShips').click(function () {
   var anchor = document.getElementById('downloadShips')
   anchor.href = 'data:' + data
   anchor.download = 'data.json'
+})
+
+$('#resetShip').click(function () {
+  App.vms.ship.$data = chassis
 })
 
 $(window).bind('unload', function () {

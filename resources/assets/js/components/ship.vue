@@ -1,7 +1,7 @@
 <template lang="jade">
 h3 {{ ship.name }} <small>{{ ship.type }}</small>
 
-table(class="table table-condensed table-striped")
+table(class="table table-condensed table-striped table-hover")
   thead
     tr
       th(class="col-sm-1") Actions
@@ -9,10 +9,10 @@ table(class="table table-condensed table-striped")
       th Name
   tbody(v-for="(key, components) in ship.components" v-if="ship.slots[key]")
     tr
-      td(colspan="3", class="text-center", :class="{'danger': exceeded(key)}")
+      td(colspan="3", class="text-center info", :class="{'danger': exceeded(key)}")
         h4(class="table-heading").
           {{ key | capitalize }} ({{ slots(key) }} / {{ ship.slots[key] }})
-    tr(v-for="component in components | orderBy 'name'")
+    tr(v-for="component in components | orderBy 'name'", track-by="$index" onmouseover="updateDetails('{{ key }}', {{ component.id }})")
       td
         a(class="btn btn-default btn-xs pull-left", style="margin-right: 10px", v-on:click="remove(key, $index, $event)") &times;
       td {{ component.slots }}

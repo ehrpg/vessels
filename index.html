@@ -21,14 +21,15 @@
         var result = text.split('-')
         var type = result[0]
         var id = result[1]
-        var data = App.data.components[type][id];
+        var data = App.getComponentById(type, id)
+        console.log(data);
         var ship = App.vms.ship
-        ship.components[type].push(data);
+        if (ship.slots[type] > 0)
+          ship.components[type].push(data);
       }
 
       function updateDetails(type, id) {
-        console.log(id);
-        var data = App.data.components[type][id]
+        var data = App.getComponentById(type, id)
         App.vms.details.$data = data
       }
     </script>
@@ -72,6 +73,9 @@
                 <a href="#container-components-armor" aria-controls="container-components-armor" role="tab" data-toggle="tab">A</a>
               </li>
               <li role="presentation">
+                <a href="#container-components-rooms" aria-controls="container-components-rooms" role="tab" data-toggle="tab">R</a>
+              </li>
+              <li role="presentation">
                 <a href="#container-components-subsystems" aria-controls="container-components-subsystems" role="tab" data-toggle="tab">S</a>
               </li>
               <li role="presentation">
@@ -81,9 +85,6 @@
             <!-- Tab panes -->
             <div id="components" class="tab-content">
               <components></components>
-              <!-- <armor></armor>
-              <subsystems></subsystems>
-              <weapons></weapons> -->
             </div><!-- /.components -->
           </div>
         </div><!-- /.sidebar -->
@@ -94,6 +95,7 @@
               <h3 class="panel-title pull-left">asd</h3>
               <div class="pull-right">
                 <a id="downloadShips" type="button" name="save" class="btn btn-default btn-xs">Save</a>
+                <a id="resetShip" type="button" name="reset" class="btn btn-default btn-xs">Reset</a>
               </div>
             </div>
             <div class="panel-body">
@@ -118,6 +120,7 @@
     </script>
     <!-- DATA / COMPONENTS -->
     <script src="./data/components/armor.js" charset="utf-8"></script>
+    <script src="./data/components/rooms.js" charset="utf-8"></script>
     <script src="./data/components/subsystems.js" charset="utf-8"></script>
     <script src="./data/components/weapons.js" charset="utf-8"></script>
     <!-- DATA / CHASSIS -->
