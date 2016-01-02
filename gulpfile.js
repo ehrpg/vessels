@@ -9,7 +9,9 @@ var gulp = require('gulp')
 var concat = require('gulp-concat')
 var cssBase64 = require('gulp-css-base64')
 var inject = require('gulp-inject')
+var minifyCss = require('gulp-minify-css')
 var runSequence = require('run-sequence')
+var uglify = require('gulp-uglify')
 
 gulp.task('build', function (callback) {
   runSequence('base64', 'styles', 'scripts', 'data', 'inject')
@@ -28,23 +30,26 @@ gulp.task('styles', function () {
     './public/css/panelWithTabs.css',
     './public/css/site.css'
   ]).pipe(concat('styles.css'))
+    .pipe(minifyCss())
     .pipe(gulp.dest('./dist/'))
 })
 
 gulp.task('scripts', function () {
   return gulp.src([
-    './public/js/jquery.js',
+    './build/jquery-2.1.4.min.js',
     './public/js/bootstrap.min.js',
     './public/js/datatables.min.js',
-    './public/js/vue.js',
+    './build/vue.min.js',
     './public/js/app.js'
   ]).pipe(concat('scripts.js'))
+    .pipe(uglify())
     .pipe(gulp.dest('./dist/'))
 })
 
 gulp.task('data', function () {
   return gulp.src('./data/**')
     .pipe(concat('data.js'))
+    .pipe(uglify())
     .pipe(gulp.dest('./dist/'))
 })
 
