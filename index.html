@@ -5,32 +5,11 @@
     <title>EH Vessels</title>
     <link rel="stylesheet" href="./public/css/bootstrap.min.css" media="screen" charset="utf-8">
     <link rel="stylesheet" href="./public/css/datatables.min.css" media="screen" charset="utf-8">
+    <link rel="stylesheet" href="./public/css/panelWithTabs.css" media="screen" charset="utf-8">
     <link rel="stylesheet" href="./public/css/site.css" media="screen" charset="utf-8">
     <script type="text/javascript">
-      function drag (ev) {
-        ev.dataTransfer.setData('text', ev.target.id)
-      }
-
-      function allowDrop(ev) {
-        ev.preventDefault();
-      }
-
-      function drop(ev) {
-        ev.preventDefault();
-        var text = ev.dataTransfer.getData('text');
-        var result = text.split('-')
-        var type = result[0]
-        var id = result[1]
-        var data = App.getComponentById(type, id)
-        console.log(data);
-        var ship = App.vms.ship
-        if (ship.slots[type] > 0)
-          ship.components[type].push(data);
-      }
-
       function updateDetails(type, id) {
-        var data = App.getComponentById(type, id)
-        App.vms.details.$data = data
+        App.vms.details.$data = App.getComponentById(type, id)
       }
     </script>
   </head>
@@ -56,32 +35,37 @@
               <h3 class="panel-title">Info</h3>
             </div>
             <div class="panel-body">
-              {{ $data | json }}
+              <p v-if="hasData">
+                {{ $data | json }}
+              </p>
+              <p v-else>
+                No component selected.
+              </p>
             </div>
           </div>
         </div>
       </div>
+
       <div class="row">
         <div id="sidebar" class="col-sm-3 col-lg-1">
-          <div class="panel panel-default">
+          <div class="panel with-nav-tabs panel-default">
             <div class="panel-heading">
-              Components
+              <!-- Nav tabs -->
+              <ul class="nav nav-tabs" role="tablist">
+                <li role="presentation" class="active">
+                  <a href="#container-components-armor" aria-controls="container-components-armor" role="tab" data-toggle="tab">A</a>
+                </li>
+                <li role="presentation">
+                  <a href="#container-components-rooms" aria-controls="container-components-rooms" role="tab" data-toggle="tab">R</a>
+                </li>
+                <li role="presentation">
+                  <a href="#container-components-subsystems" aria-controls="container-components-subsystems" role="tab" data-toggle="tab">S</a>
+                </li>
+                <li role="presentation">
+                  <a href="#container-components-weapons" aria-controls="container-components-weapons" role="tab" data-toggle="tab">W</a>
+                </li>
+              </ul>
             </div>
-            <!-- Nav tabs -->
-            <ul class="nav nav-tabs" role="tablist">
-              <li role="presentation" class="active">
-                <a href="#container-components-armor" aria-controls="container-components-armor" role="tab" data-toggle="tab">A</a>
-              </li>
-              <li role="presentation">
-                <a href="#container-components-rooms" aria-controls="container-components-rooms" role="tab" data-toggle="tab">R</a>
-              </li>
-              <li role="presentation">
-                <a href="#container-components-subsystems" aria-controls="container-components-subsystems" role="tab" data-toggle="tab">S</a>
-              </li>
-              <li role="presentation">
-                <a href="#container-components-weapons" aria-controls="container-components-weapons" role="tab" data-toggle="tab">W</a>
-              </li>
-            </ul>
             <!-- Tab panes -->
             <div id="components" class="tab-content">
               <components></components>
@@ -90,17 +74,56 @@
         </div><!-- /.sidebar -->
 
         <div id="content" class="col-sm-9 col-lg-11" ondrop="drop(event)", ondragover="allowDrop(event)">
-          <div class="panel panel-default">
+          <div class="panel with-nav-tabs panel-default">
             <div class="panel-heading clearfix">
-              <h3 class="panel-title pull-left">asd</h3>
-              <div class="pull-right">
-                <a id="downloadShips" type="button" name="save" class="btn btn-default btn-xs">Save</a>
+              <div class="pull-right" style="margin: 7px">
+                <a id="downloadShips" type="button" name="save" class="btn btn-default btn-xs">Download</a>
+                <a id="saveShips" type="button" name="save" class="btn btn-default btn-xs">Save</a>
                 <a id="resetShip" type="button" name="reset" class="btn btn-default btn-xs">Reset</a>
               </div>
+              <!-- Nav tabs -->
+              <ul class="nav nav-tabs" role="tablist">
+                <li role="presentation" class="active">
+                  <a id="ships-nav-tab" href="#ships" aria-controls="ships" role="tab" data-toggle="tab">Ships</a>
+                </li>
+                  <li role="presentation">
+                    <a href="#chassisList" aria-controls="chassisList" role="tab" data-toggle="tab">Chassis</a>
+                  </li>
+              </ul>
             </div>
             <div class="panel-body">
-              <div id="ships">
-                <ship :ship="$data"></ship>
+              <div class="tab-content">
+                <div id="ships" class="tab-pane collapse in active">
+                  <ship :ship="$data"></ship>
+                </div>
+                <div id="chassisList" class="tab-pane collapse">
+                  <div v-for="chassis in $data" class="chassis" data-id="{{ chassis.id }}">
+                    <div class="thumbnail">
+                      <div class="caption">
+                        <h3>{{ chassis.name }}</h3>
+                        <dl>
+                          <dt>size</dt>
+                          <dd>{{ chassis.size }}</dd>
+                          <dt>type</dt>
+                          <dd>{{ chassis.type }}</dd>
+                          <dt>slots</dt>
+                          <dd>
+                            <ul>
+                              <li>
+                                armor: {{ chassis.slots.armor }}
+                              </li>
+                              <li v-if="chassis.slots.rooms > 0">
+                                rooms: {{ chassis.slots.rooms }}
+                              </li>
+                              <li>subsystems: {{ chassis.slots.subsystems }}</li>
+                              <li>weapons: {{ chassis.slots.weapons }}</li>
+                            </ul>
+                          </dd>
+                        </dl>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

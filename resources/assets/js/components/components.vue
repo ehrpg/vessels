@@ -12,7 +12,7 @@ div(role="tabpanel" class="tab-pane",
         th Name
         th Slots
     tbody
-      tr(v-for="(id, component) in components", id="{{ key }}-{{ component.id }}", draggable="true", ondragstart="drag(event)", onmouseover="updateDetails('{{ key }}', {{ component.id }})")
+      tr(v-for="(id, component) in components", id="{{ key }}-{{ component.id }}", draggable="true", ondragstart="drag(event)", onmouseover="updateDetails('{{ key }}', {{ component.id }})", v-on:dblclick="addComponentToShip(key, component)")
         td {{ component.name }}
         td(class="text-center") {{ component.slots }}
 </template>
@@ -37,6 +37,14 @@ div(role="tabpanel" class="tab-pane",
   export default {
     data: function () {
       return App.data.components
+    },
+    methods: {
+      addComponentToShip: function (type, component) {
+        var ship = App.vms.ship
+        if (ship.slots[type] > 0) {
+          ship.components[type].push(component);
+        }
+      }
     }
   }
 </script>

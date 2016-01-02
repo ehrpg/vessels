@@ -1,5 +1,5 @@
 <template lang="jade">
-h3 {{ ship.name }} <small>{{ ship.type }}</small>
+h3 {{ ship.name }} <small>{{ ship.type }}, {{ ship.size }}</small>
 
 table(class="table table-condensed table-striped table-hover")
   thead
@@ -14,7 +14,7 @@ table(class="table table-condensed table-striped table-hover")
           {{ key | capitalize }} ({{ slots(key) }} / {{ ship.slots[key] }})
     tr(v-for="component in components | orderBy 'name'", track-by="$index" onmouseover="updateDetails('{{ key }}', {{ component.id }})")
       td
-        a(class="btn btn-default btn-xs pull-left", style="margin-right: 10px", v-on:click="remove(key, $index, $event)") &times;
+        a(class="btn btn-default btn-xs pull-left", style="margin-right: 10px", v-on:click="remove(key, component)") &times;
       td {{ component.slots }}
       td {{ component.name }}
 </template>
@@ -48,8 +48,9 @@ table(class="table table-condensed table-striped table-hover")
             return 0
           }
         },
-        remove: function (type, index, event) {
-          this.ship.components[type].splice(index, 1)
+        remove: function (type, component) {
+          var container = this.ship.components[type]
+          container.splice(container.indexOf(component), 1)
         }
       }
   }

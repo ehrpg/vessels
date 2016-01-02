@@ -53,6 +53,17 @@ div[id^='container-components-'] {
   #content {
     max-width: calc(100% - 250px);
   }
+  .chassis {
+    float: left;
+    padding: 10px;
+    width: calc(100% / 3);
+  }
+  .chassis:nth-child(4) {
+    clear: both;
+  }
+  .chassis h3 {
+    margin-top: 0;
+  }
 }
 
 .table-condensed>tbody>tr>td {

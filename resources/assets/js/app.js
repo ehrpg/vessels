@@ -1,13 +1,23 @@
 import Ship from './components/ship.vue'
 import Components from './components/components.vue'
 
+App._getById = function (container, id) {
+  for (var i = 0; i < container.length; i++) {
+    var element = container[i]
+    if (parseInt(element.id, 10) === id) {
+      return element
+    }
+  }
+  return null
+}
+
+App.getChassisById = function (id) {
+  return App._getById(App.data.chassis, id)
+}
+
 App.getComponentById = function (type, id) {
   var components = App.data.components[type]
-  for (var i = 0; i < components.length; i++) {
-    var component = components[i]
-    if (component.id == id)
-      return component
-  }
+  return App._getById(components, id)
 }
 
 function loadChassis (chassis) {
@@ -38,17 +48,33 @@ var components = new Vue({
 
 App.vms.details = new Vue({
   el: '#details',
-  data: {}
+  data: {},
+  computed: {
+    hasData: function () {
+      return Object.keys(this.$data).length > 0
+    }
+  }
+})
+
+var chassisList = $.extend(true, {}, App.data.chassis)
+
+new Vue({
+  el: '#chassisList',
+  data: function () {
+    return chassisList
+  }
 })
 
 var currentShip = JSON.parse(localStorage.getItem('currentShip'))
-var chassis = loadChassis(App.data.chassis[1])
-var ship = currentShip !== undefined
+var chassis = loadChassis(App.data.chassis[0])
+var ship = (currentShip !== null && currentShip !== undefined && Object.keys(currentShip).length > 0)
   ? currentShip : chassis
 
 App.vms.ship = new Vue({
   el: '#ships',
-  data: ship,
+  data: function () {
+    return ship
+  },
   components: {
     ship: Ship
   }
@@ -63,7 +89,16 @@ $('#downloadShips').click(function () {
 })
 
 $('#resetShip').click(function () {
-  App.vms.ship.$data = chassis
+  if (confirm('This will delete all current changes. Are you sure?')) {
+    App.vms.ship.$data = $.extend(true, {}, App.data.chassis[0])
+  }
+})
+$('.chassis').click(function () {
+  var $this = $(this)
+  var id = parseInt($this.attr('data-id'), 10)
+  var chassis = App.getChassisById(id)
+  App.vms.ship.$data = loadChassis($.extend(true, {}, chassis))
+  $('#ships-nav-tab').trigger('click')
 })
 
 $(window).bind('unload', function () {
