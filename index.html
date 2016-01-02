@@ -3,10 +3,12 @@
   <head>
     <meta charset="utf-8">
     <title>EH Vessels</title>
+    <!-- inject:styles:css -->
     <link rel="stylesheet" href="./public/css/bootstrap.min.css" media="screen" charset="utf-8">
     <link rel="stylesheet" href="./public/css/datatables.min.css" media="screen" charset="utf-8">
     <link rel="stylesheet" href="./public/css/panelWithTabs.css" media="screen" charset="utf-8">
     <link rel="stylesheet" href="./public/css/site.css" media="screen" charset="utf-8">
+    <!-- endinject -->
     <script type="text/javascript">
       function updateDetails(type, id) {
         App.vms.details.$data = App.getComponentById(type, id)
@@ -131,6 +133,12 @@
       </div><!-- /.row -->
     </div><!-- /.container-fluid -->
 
+    <script type="text/javascript">
+      var App = {}; App.data = {}; App.data.components = {}; App.vms = {};
+    </script>
+    <!-- inject:data:js -->
+    <!-- endinject -->
+    <!-- inject:scripts:js -->
     <!-- LIBRARIES -->
     <script src="./public/js/jquery.js" charset="utf-8"></script>
     <script src="./public/js/bootstrap.min.js" charset="utf-8"></script>
@@ -138,7 +146,6 @@
     <script src="./public/js/vue.js" charset="utf-8"></script>
     <!-- ENVIRONMENT INITIALIZATION -->
     <script type="text/javascript">
-      var App = {}; App.data = {}; App.data.components = {}; App.vms = {};
       Vue.config.debug = true
     </script>
     <!-- DATA / COMPONENTS -->
@@ -152,5 +159,6 @@
     <script src="./data/ships/small_ships.js" charset="utf-8"></script>
     <!-- MAIN APP -->
     <script src="./public/js/app.js" charset="utf-8"></script>
+    <!-- endinject -->
   </body>
 </html>

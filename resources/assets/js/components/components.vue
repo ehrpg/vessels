@@ -12,7 +12,7 @@ div(role="tabpanel" class="tab-pane",
         th Name
         th Slots
     tbody
-      tr(v-for="(id, component) in components", id="{{ key }}-{{ component.id }}", draggable="true", ondragstart="drag(event)", onmouseover="updateDetails('{{ key }}', {{ component.id }})", v-on:dblclick="addComponentToShip(key, component)")
+      tr(v-for="(id, component) in components", id="{{ key }}-{{ component.id }}", onmouseover="updateDetails('{{ key }}', {{ component.id }})", v-on:dblclick="addComponentToShip(key, component)")
         td {{ component.name }}
         td(class="text-center") {{ component.slots }}
 </template>
